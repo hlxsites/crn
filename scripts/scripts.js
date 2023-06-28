@@ -1,5 +1,6 @@
 import {
   sampleRUM,
+  buildBlock,
   loadHeader,
   loadFooter,
   decorateButtons,
@@ -42,24 +43,12 @@ export async function lookupPages(pathnames) {
  * @param {Element} main The container element
  */
 function buildHeroBlock(main) {
-  const heroHtml = `
-    <div class="hero-header">
-      <div class="hero-header-image">
-        <img src = '/images/hero-banner.jpeg'>
-      </div>
-      <div class="hero-container">
-        <h1 class="hero-header-title">
-          <a href="/" class="hero-header-title-link">IoT Integrator</a>
-        </h1>
-        <h2 class="hero-header-subtitle">Powering the business behind the Internet of Things</h2>
-    </div>
-  `;
   const section = document.createElement('div');
-  section.innerHTML = heroHtml;
+  section.append(buildBlock('hero', { elems: [] }));
   main.prepend(section);
 }
 
-// Build Article Props
+// Article
 // Retreive metadata value based on the key
 function getMetadata(key) {
   const metaElement = document.querySelector(`meta[name="${key}"]`);
@@ -81,25 +70,47 @@ function formatPublishedDate(rawDate) {
 }
 
 function createHeaderList(publishedDate, author) {
-  const headerList = document.createElement('div');
-  headerList.classList.add('header-list');
-  headerList.innerHTML = `${publishedDate} / Author: ${author}`;
-  return headerList;
+  if (publishedDate && author) {
+    const headerList = document.createElement('div');
+    headerList.classList.add('header-list');
+    const trimmedAuthor = author.trim().toLowerCase().replace(' ', '-');
+    headerList.innerHTML = `${publishedDate} / Author: <a href="/users/${trimmedAuthor}">${author}</a>`;
+    return headerList;
+  }
+  return null;
 }
 
 function createListItem(key, value) {
   const listItem = document.createElement('li');
   listItem.classList.add('article-key-item');
-  listItem.textContent = `${capitalizeFirstLetter(key)}: ${value}`;
+  const values = value.split(',');
+  if (values.length > 1) {
+    listItem.innerHTML += `${capitalizeFirstLetter(key)}: `;
+    values.forEach((val, i) => {
+      const trimmedVal = val.trim();
+      listItem.innerHTML += `<a href="/${key}?id=${trimmedVal}" title="${trimmedVal}">${trimmedVal}</a>`;
+      if (i !== (values.length - 1)) {
+        listItem.innerHTML += ', ';
+      }
+    });
+  } else {
+    listItem.innerHTML = `${capitalizeFirstLetter(key)}: <a href="/${key}?id=${value.trim()}" title="">${value.trim()}</a>`;
+  }
   return listItem;
 }
 
-function createArticleKeyDiv(metadataKeys) {
-  const articleKeyDiv = document.createElement('div');
-  articleKeyDiv.classList.add('article-key');
+// Create article preface block
+function createArticlePreface() {
+  const articlePreface = document.createElement('div');
+  articlePreface.classList.add('article-preface');
+
+  const articleKeyTitle = document.createElement('h3');
+  articleKeyTitle.classList.add('article-key-title');
+  articleKeyTitle.textContent = 'Article Key';
 
   const articleKeyList = document.createElement('ul');
   articleKeyList.classList.add('article-key-list');
+  const metadataKeys = ['vertical', 'application', 'featured-sis', 'featured-tech'];
 
   metadataKeys.forEach((key) => {
     const value = getMetadata(key);
@@ -109,25 +120,28 @@ function createArticleKeyDiv(metadataKeys) {
     }
   });
 
-  articleKeyDiv.appendChild(articleKeyList);
-  return articleKeyDiv;
+  if (articleKeyList.children) {
+    articlePreface.appendChild(articleKeyTitle);
+    articlePreface.appendChild(articleKeyList);
+  }
+
+  return articlePreface;
 }
 
-// Build the article properties block
 function buildArticlePropsBlock(main) {
-  const rawPublishedDate = getMetadata('publisheddate');
-  const publishedDate = formatPublishedDate(rawPublishedDate);
-  const author = getMetadata('author');
-  const metadataKeys = ['vertical', 'application', 'featuredsis', 'featured-tech'];
-
-  const headerList = createHeaderList(publishedDate, author);
-  const articleKeyDiv = createArticleKeyDiv(metadataKeys);
-
-  const hook = main.querySelector('picture');
-  if (hook) {
-    hook.parentElement.classList.add('article-key-container');
-    hook.parentElement.prepend(headerList);
-    hook.parentElement.append(articleKeyDiv);
+  const template = getMetadata('template');
+  if (template === 'Article') {
+    const rawPublishedDate = getMetadata('publisheddate');
+    const publishedDate = formatPublishedDate(rawPublishedDate);
+    const author = getMetadata('author');
+    const headerList = createHeaderList(publishedDate, author);
+    const articlePreface = createArticlePreface();
+    const hook = main.querySelector('picture');
+    if (hook) {
+      hook.parentElement.classList.add('article-key-container');
+      if (headerList) hook.parentElement.prepend(headerList);
+      hook.parentElement.append(articlePreface);
+    }
   }
 }
 

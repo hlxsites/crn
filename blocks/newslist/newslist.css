@@ -20,7 +20,8 @@
 }
 
 .newslist.block .newslist-container .newslist-item a:hover,
-.newslist.block .newslist-container .resultslist-item a:hover {
+.newslist.block .newslist-container .resultslist-item a:hover,
+.newslist.block .newslist-container .search-resultslist-item a:hover {
   text-decoration: underline;
   color: var(--link-hover-color);
 }
@@ -28,6 +29,11 @@
 .newslist.block .newslist-container .newslist-item-photo img {
   padding: 5px 0 0;
   box-shadow: 0 1px 3px #e1e3ef;
+}
+
+.newslist.block .newslist-container .search-resultslist-item .search-resultslist-item-header a {
+  text-decoration: underline;
+  font-weight: 600;
 }
 
 .newslist.block .newslist-container .resultslist-item .resultslist-item-header a {
@@ -45,6 +51,10 @@
   display: block;
   border-bottom: 1px solid #000;
   text-decoration: none;
+}
+
+.newslist.block .newslist-container .search-resultslist-item .search-resultslist-item-details a {
+  font-size: 12px;
 }
 
 .newslist.block .newslist-container .newslist-item-content .newslist-item-header a:hover,
@@ -81,6 +91,17 @@
   text-transform: uppercase;
 }
 
+.newslist.block .newslist-container .search-header-container h2 {
+  color: #000;
+  font-size: 16px;
+  padding: 20px 0;
+  margin: 0 0 5px;
+  text-transform: none;
+}
+
+.newslist.block .newslist-container .search-header-container label {
+  line-height: 21px;
+}
 
 .newslist.block .newslist-container .resultslist-item {
   padding-left: 20px;
@@ -102,6 +123,24 @@
   font-size: 12px;
   margin-bottom: 16px;
   line-height: 21px;
+}
+
+.newslist.block .newslist-container .search-resultslist-item {
+  padding-left: 30px;
+  margin-bottom: 28px;
+}
+
+.newslist.block .newslist-container .search-resultslist-item .search-resultslist-item-details {
+  font-size: 12px;
+  margin-bottom: 16px;
+  line-height: 1.5;
+  padding-left: 1em;
+}
+
+.newslist.block .newslist-container .search-resultslist-item .search-resultslist-item-content {
+  line-height: 21px;
+  padding-left: 1em;
+  margin-bottom: 1rem;
 }
 
 .newslist.block .newslist-container .pagination {

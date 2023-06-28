@@ -21,6 +21,21 @@ export default function decorate(block) {
   const infoGraphicEl = range.createContextualFragment(infoGraphicHTML);
   block.append(infoGraphicEl);
 
+  // add sidenav Ad
+  const sidenavAdHTML = `
+    <!-- AD IMU  STARTS  -->
+
+    <div class="aside-ad">
+      <span class="ad-title">Advertisement</span> <br />
+      <!-- /21804213519/CRN/Ros_Right_Sidebar_2 imu 2-->
+      <div id="unit-1659133096504" class="tmsads"></div>
+    </div>
+
+    <br clear="all">
+  `;
+  const sidenavAdEl = range.createContextualFragment(sidenavAdHTML);
+  block.append(sidenavAdEl);
+
   // add podcast playlist
   const podCastPlaylistHTML = `
   <div class="aside-block-sponsor">
