@@ -196,7 +196,27 @@ async function loadEager(doc) {
 function setContentContainer(main) {
   // this is the container that will hold the main page content and
   // aside (which will be loaded in delayed)
-  const container = main.querySelector('.newslist-container') || main.querySelector('.hero-header-container+div.section');
+  const skipList = ['hero-container', 'page-title'];
+  let container = main.querySelector('.newslist-container');
+  if (!container) {
+    const allSections = main.querySelectorAll('div.section');
+    const newSection = document.createElement('div');
+    allSections.forEach((section) => {
+      // check if section.classList includes any of the skipList, otherwise move that section to the newSection
+      if (!skipList.some((skipItem) => section.classList.contains(skipItem))) {
+        newSection.append(section);
+      }
+    });
+    // if newSection length is greater than 0, append the block to the newSection
+    if (newSection.children.length > 0) {
+      const parentSection = document.createElement('div');
+      parentSection.classList.add('section');
+      parentSection.classList.add('content-container');
+      parentSection.append(newSection);
+      main.append(parentSection);
+      container = parentSection;
+    }
+  }
   if (container) {
     container.classList.add('content-container');
   }

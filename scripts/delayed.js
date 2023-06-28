@@ -47,11 +47,11 @@ function buildAsideBlock(main) {
   block.classList.add('block');
   block.setAttribute('data-block-name', 'aside');
   // append the aside block to either newslist-container or first non hero-header-container section
-  const container = main.querySelector('.newslist-container') || main.querySelector('.hero-header-container+div.section');
+  const container = main.querySelector('.newslist-container') || main.querySelector('.content-container');
   if (container) {
     container.append(block);
+    loadBlock(block);
   }
-  loadBlock(block);
 }
 
 function addMartechStack() {
