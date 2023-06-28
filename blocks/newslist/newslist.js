@@ -182,7 +182,7 @@ export default async function decorate(block) {
       itemHtml = `
         <div class="newslist-item">
           <div class="newslist-item-photo">
-            <a href="${e.path}"><img src="${e.image}" alt="${e.title}"></a>
+            <a href="${e.path}"><img width="400" height="300" src="${e.image}" alt="${e.title}"></a>
           </div>
           <div class="newslist-item-content">
             <div class="newslist-item-header">
