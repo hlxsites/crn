@@ -27,6 +27,7 @@
 }
 
 .newslist.block .newslist-container .newslist-item-photo img {
+  width: 100%;
   padding: 5px 0 0;
   box-shadow: 0 1px 3px #e1e3ef;
 }
