@@ -86,6 +86,9 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
   if (!isDesktop.matches) {
     const tools = nav.querySelector('.nav-tools');
     tools.style.display = expanded ? 'none' : 'flex';
+  } else {
+    const tools = nav.querySelector('.nav-tools');
+    tools.style.display = 'flex';
   }
 }
 
