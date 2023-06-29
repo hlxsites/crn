@@ -203,7 +203,8 @@ function setContentContainer(main) {
     const newSection = document.createElement('div');
     newSection.classList.add('section');
     allSections.forEach((section) => {
-      // check if section.classList includes any of the skipList, otherwise move that section to the newSection
+      // check if section.classList includes any of the skipList,
+      // otherwise move that section to the newSection
       if (!skipList.some((skipItem) => section.classList.contains(skipItem))) {
         section.classList.remove('section');
         newSection.append(section);
