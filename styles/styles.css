@@ -251,6 +251,14 @@ main .section {
   padding: 0 16px;
 }
 
+main .section.content-container > div:first-child {
+  background-color: #fff;
+  border-radius: 5px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border: 1px solid #707070;
+}
+
 @media (min-width: 900px) {
   .section>div {
     max-width: 1200px;
@@ -270,15 +278,15 @@ main .section {
 
   main .section.content-container > div:first-child {
     width: 66.6666%;
+    margin: 20px 0 20px 20px;
     padding: 20px;
-    margin: unset;
   }
 
   main .section.content-container > div:nth-child(2) {
     width: 33.3333%;
     margin: unset;
     margin-top: 20px;
-    padding: 20px;
+    padding: 0 20px 20px;
   }
 }
 
@@ -353,12 +361,12 @@ main .page-title h4 a {
   text-decoration: underline;
 }
 
-body > main > div.section.content-container > div.default-content-wrapper {
+/* body > main > div.section.content-container div:first-child .default-content-wrapper {
   background-color: #fff;
   border-radius: 5px;
   margin: 20px 0 20px 20px;
   border: 1px solid #707070;
-}
+} */
 
 main .default-content-wrapper h2 {
   font-size: 16px;
