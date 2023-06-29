@@ -1,2 +1,6 @@
 mountpoints:
   /: https://adobe.sharepoint.com/sites/HelixProjects/Shared%20Documents/sites/the-channel-company/iot-integrator
+
+folders:
+  /vertical/: /vertical
+  /application/: /application
