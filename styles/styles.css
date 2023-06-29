@@ -257,6 +257,7 @@ main .section.content-container > div:first-child {
   margin-top: 20px;
   padding-top: 20px;
   border: 1px solid #707070;
+  height: fit-content;
 }
 
 @media (min-width: 900px) {
