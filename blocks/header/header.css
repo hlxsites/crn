@@ -203,8 +203,9 @@ header nav .nav-sections > ul > li > ul {
 header nav .nav-sections > ul > li[aria-expanded="true"] > ul {
   display: block;
   position: absolute;
+  top: 55px;
+  left: 3px;
   min-width: 160px;
-  margin: 42px 0 0 50px;
   background-color: var(--header-background-color);
   white-space: initial;
   border-top: 2px solid #00aeef;
