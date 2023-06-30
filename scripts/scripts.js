@@ -88,13 +88,13 @@ function createListItem(key, value) {
     listItem.innerHTML += `${capitalizeFirstLetter(key)}: `;
     values.forEach((val, i) => {
       const trimmedVal = val.trim();
-      listItem.innerHTML += `<a href="/${key}?id=${trimmedVal}" title="${trimmedVal}">${trimmedVal}</a>`;
+      listItem.innerHTML += `<a href="/${key}/${trimmedVal}" title="${trimmedVal}">${trimmedVal}</a>`;
       if (i !== (values.length - 1)) {
         listItem.innerHTML += ', ';
       }
     });
   } else {
-    listItem.innerHTML = `${capitalizeFirstLetter(key)}: <a href="/${key}?id=${value.trim()}" title="">${value.trim()}</a>`;
+    listItem.innerHTML = `${capitalizeFirstLetter(key)}: <a href="/${key}/${value.trim()}" title="">${value.trim()}</a>`;
   }
   return listItem;
 }

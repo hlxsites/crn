@@ -97,6 +97,12 @@ function addParam(name, value) {
   return `${window.location.pathname}?${usp.toString()}`;
 }
 
+function isCategoryPage(categoryPaths) {
+  // obtain the first part of the path
+  const basePath = window.location.pathname.split('/')[1];
+  return categoryPaths.includes(`/${basePath}`);
+}
+
 export default async function decorate(block) {
   const limit = 10;
   // get request parameter page as limit
@@ -104,8 +110,9 @@ export default async function decorate(block) {
   const pageOffset = parseInt(usp.get('page'), 10) || 0;
   const offset = pageOffset * 10;
   const l = offset + limit;
+  const categoryPaths = ['/vertical', '/application', '/featured-tech', '/featured-sis'];
   const cfg = readBlockConfig(block);
-  const key = Object.keys(cfg)[0];
+  let key = Object.keys(cfg)[0];
   let value = Object.values(cfg)[0];
   const isSearch = key === 'query';
   const index = await fetchIndex();
@@ -129,19 +136,19 @@ export default async function decorate(block) {
       </form>
     `;
     newsListContainer.append(searchHeader);
-  } else if (key) {
-    if (!value && usp.get('id')) {
-      value = usp.get('id').toLowerCase();
-    } else if (!value && !usp.get('id')) {
+  } else if (isCategoryPage(categoryPaths)) {
+    // obtain the first part of the path as key and second part as value from location.pathname
+    [key, value] = window.location.pathname.split('/').slice(1, 3);
+    if (!key || !value || !categoryPaths.includes(`/${key}`)) {
       block.remove();
       return;
     }
+    key = key.trim();
+    value = value.trim();
     if (key === 'featured-tech') {
-      shortIndex = index.filter((e) => (e[key.trim()].toLowerCase()
-        .includes(value.trim().toLowerCase())));
+      shortIndex = index.filter((e) => (e[key].includes(value)));
     } else {
-      shortIndex = index.filter((e) => (e[key.trim()].toLowerCase()
-        === value.trim().toLowerCase()));
+      shortIndex = index.filter((e) => (e[key] === value));
     }
 
     const header = document.createElement('h2');
@@ -164,7 +171,6 @@ export default async function decorate(block) {
           <a href="/users/${convertToKebabCase(e.author)}">${e.author}</a> - ${getHumanReadableDate(e.publisheddate)}
         </div>
       </div>
-
       `;
     } else if (key && value) {
       itemHtml = `
