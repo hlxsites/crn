@@ -128,6 +128,16 @@ export default async function decorate(block) {
       });
     }
 
+    // temp fix for the links, remove this when the nav rewrite is done at the CDN level
+    const links = nav.querySelectorAll('a');
+    links.forEach((link) => {
+      const href = link.getAttribute('href');
+      if (href && href.startsWith('/vertical/')) {
+        const id = href.split('/').pop();
+        link.setAttribute('href', `/vertical?id=${id}`);
+      }
+    });
+
     // search tool
     const search = nav.querySelector('.nav-tools');
     search.innerHTML = `
